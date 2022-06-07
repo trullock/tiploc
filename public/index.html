@@ -63,14 +63,25 @@
 
 			let openInfoWindow = null;
 
+			const pinGreen = {
+				url: window.location.protocol + '//' + window.location.host + '/pin-green.png',
+				scaledSize: new google.maps.Size(32, 32)
+			};
+			
+			const pinRed = {
+				url: window.location.protocol + '//' + window.location.host + '/pin-red.png',
+				scaledSize: new google.maps.Size(32, 32)
+			};
+
 			tiplocs.Tiplocs.forEach(tiploc => {
 				let marker = new google.maps.Marker({
 					position: { lat: tiploc.Latitude, lng: tiploc.Longitude},
 					map: map,
+					icon: tiploc.Details.BPlan_TimingPoint == 'Mandatory' ? pinRed : pinGreen
 				});
 
 				const infowindow = new google.maps.InfoWindow({
-					content: tiploc.DisplayName,
+					content: `<h1>${tiploc.DisplayName}</h1><h2>${tiploc.Tiploc}</h2>${tiploc.Details.BPlan_TimingPoint}`,
 				});
 
 				marker.addListener("click", () => {
